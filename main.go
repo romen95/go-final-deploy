@@ -104,6 +104,18 @@ func main() {
 	}
 	defer db.Close()
 
+	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS parcel (
+		number INTEGER PRIMARY KEY,
+		client INTEGER,
+		status TEXT,
+		address TEXT,
+		created_at TEXT
+	)`)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
 	store := NewParcelStore(db)
 	service := NewParcelService(store)
 
